@@ -19,7 +19,10 @@ const companySchema = new mongoose.Schema(
         "other",
       ],
     },
-    employeeCount: { type: Number, min: 1 },
+    employeeCount: {
+      type: Number,
+      min: 1,
+    },
     website: {
       type: String,
     },
@@ -30,6 +33,13 @@ const companySchema = new mongoose.Schema(
     isActive: {
       type: Boolean,
       default: true,
+    },
+    annualRevenue: {
+      type: Number,
+      min: 0,
+    },
+    email: {
+      type: String,
     },
   },
   { timestamps: true }
