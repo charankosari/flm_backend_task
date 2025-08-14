@@ -5,6 +5,6 @@ const errorMiddleware = require("./middlewares/error");
 const app = express();
 app.use(cors());
 app.use(express.json());
-app.use("/api/v1/company", company);
+app.use("/api/v1/companies", company);
 app.use(errorMiddleware);
 module.exports = app;
