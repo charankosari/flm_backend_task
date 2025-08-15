@@ -22,7 +22,7 @@ exports.getCompanies = asyncHandler(async (req, res, next) => {
     queryFilter.industry = req.query.industry;
   }
   if (req.query.isActive) {
-    filters.isActive = req.query.isActive === "true";
+    queryFilter.isActive = req.query.isActive === "true";
   }
   if (req.query.minAnnualRevenue || req.query.maxAnnualRevenue) {
     queryFilter.annualRevenue = {};
