@@ -21,6 +21,10 @@ exports.getCompanies = asyncHandler(async (req, res, next) => {
   if (req.query.industry) {
     queryFilter.industry = req.query.industry;
   }
+  if (req.query.searchTerm) {
+    const searchRegex = new RegExp(req.query.searchTerm, "i"); // case-insensitive
+    queryFilter.$or = [{ name: searchRegex }];
+  }
   if (req.query.isActive) {
     queryFilter.isActive = req.query.isActive === "true";
   }
