@@ -93,3 +93,28 @@ exports.deleteCompany = asyncHandler(async (req, res, next) => {
     message: "Company deleted successfully",
   });
 });
+
+// search autocomplete
+exports.searchCompanies = asyncHandler(async (req, res, next) => {
+  const searchTerm = req.query.q;
+
+  if (!searchTerm) {
+    return next(new ErrorHandler("A search query 'q' is required.", 400));
+  }
+
+  const page = parseInt(req.query.page, 10) || 1;
+  const limit = parseInt(req.query.limit, 10) || 10;
+  const skip = (page - 1) * limit;
+  const queryFilter = { name: { $regex: searchTerm, $options: "i" } };
+  const companies = await Company.find(queryFilter).skip(skip).limit(limit);
+  const totalCompanies = await Company.countDocuments(queryFilter);
+  res.status(200).json({
+    success: true,
+    count: companies.length,
+    total: totalCompanies,
+    page: page,
+    pages: Math.ceil(totalCompanies / limit),
+    data: companies,
+    message: "Search results retrieved successfully",
+  });
+});
